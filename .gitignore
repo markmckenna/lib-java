@@ -1,6 +1,14 @@
 *.class
 
-# Package Files #
 *.jar
 *.war
 *.ear
+
+.idea/*
+!.idea/inspectionProfiles/
+!.idea/codeStyleSettings.xml
+!.idea/dictionaries/
+*.iml
+
+target/
+out/
