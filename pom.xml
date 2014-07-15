@@ -12,7 +12,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.source>1.7</project.build.source>
+        <project.build.target>1.7</project.build.target>
     </properties>
+
+    <scm>
+        <connection>scm:git:git@github.com:markmckenna/LibJava.git</connection>
+        <developerConnection>scm:git:git@github.com:markmckenna/LibJava.git</developerConnection>
+        <url>https://www.github.com/markmckenna/LibJava</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -39,6 +48,18 @@
             <artifactId>annotations</artifactId>
             <version>13.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -51,6 +72,29 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.4</version>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>${project.build.source}</source>
+                            <target>${project.build.target}</target>
+                            <forceAjcCompile>true</forceAjcCompile>
+                            <complianceLevel>${project.build.source}</complianceLevel>
+                            <showWeaveInfo>false</showWeaveInfo>
+                            <verbose>false</verbose>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
