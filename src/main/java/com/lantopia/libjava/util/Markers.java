@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.*;
 
@@ -20,7 +21,7 @@ import java.util.*;
  * contents; but comparison with other instances, even obtained from these methods, will be false.
  *
  * Using these for sentinel values is better than (for example) Collections.empty*() because of its uniqueness
- * properties. Several such sentinels can be distinctly created for a single variable; it will be distinct from simply
+ * getProperties. Several such sentinels can be distinctly created for a single variable; it will be distinct from simply
  * having a real empty Collection instance attached; and sentinels created for other Collection variables will not
  * match this one, providing an additional layer of protection.
  */
@@ -34,14 +35,14 @@ public final class Markers {
      * @return a unique, immutable Iterator iterating over no items.
      */
     public static <T> Iterator<T> markerIterator() { return new MarkerIterator<>(); }
-    public static <T> Iterator<T> markerIterator(@NonNls @NotNull final String name) { return new MarkerIterator<>(name); }
+    public static <T> Iterator<T> markerIterator(@NonNls final String name) { return new MarkerIterator<>(name); }
 
     /**
      * @param <T> The content type of the returned set
      * @return An immutable, empty, unique Set instance, suitable for use as a marker instance
      */
     public static <T> Set<T> markerSet() { return new MarkerSet<>(); }
-    public static <T> Set<T> markerSet(@NotNull @NonNls final String name) { return new MarkerSet<>(name); }
+    public static <T> Set<T> markerSet(@NonNls final String name) { return new MarkerSet<>(name); }
 
     /**
      * @param <K> Key type of the Map
@@ -49,10 +50,10 @@ public final class Markers {
      * @return A unique, empty, immutable Map instance, suitable for use as a marker instance.
      */
     public static <K,V> Map<K,V> markerMap() { return new MarkerMap<>(); }
-    public static <K,V> Map<K,V> markerMap(@NotNull @NonNls final String name) { return new MarkerMap<>(name); }
+    public static <K,V> Map<K,V> markerMap(@NonNls final String name) { return new MarkerMap<>(name); }
 
     /**
-     * @return A unique object with no special properties.
+     * @return A unique object with no special getProperties.
      */
     public static Object marker() { return new Object(); }
 
@@ -92,7 +93,7 @@ public final class Markers {
         private static final long serialVersionUID = -8003381120236505478L;
         private static final Object[] EmptyArray = new Object[0];
 
-        @NonNls @NotNull protected final String name;
+        @NonNls protected final String name;
 
         MarkerCollection() { name = ""; }
         MarkerCollection(@NotNull @NonNls final String name) { this.name = name; }
@@ -104,8 +105,8 @@ public final class Markers {
         @NotNull public Iterator<T> iterator() { return Collections.emptyIterator(); }
         @NotNull public Object[] toArray() { return EmptyArray; }
 
-        @SuppressWarnings("AssignmentToNull")
-        @NotNull public <U> U[] toArray(@NotNull final U[] a) {
+        @Nonnull @SuppressWarnings("AssignmentToNull")
+        public <U> U[] toArray(final U[] a) {
             if (a.length > 0) a[0] = null;
             return a;
         }
@@ -117,10 +118,10 @@ public final class Markers {
         public boolean add(final T e) { throw newUnsupported(); }
         public boolean remove(final Object o) { return false; }
 
-        public boolean containsAll(@NotNull final Collection<?> c) { return false; }
-        public boolean addAll(@NotNull final Collection<? extends T> c) { throw newUnsupported(); }
-        public boolean removeAll(@NotNull final Collection<?> c) { return false; }
-        public boolean retainAll(@NotNull final Collection<?> c) { return false; }
+        public boolean containsAll(final Collection<?> c) { return false; }
+        public boolean addAll(final Collection<? extends T> c) { throw newUnsupported(); }
+        public boolean removeAll(final Collection<?> c) { return false; }
+        public boolean retainAll(final Collection<?> c) { return false; }
 
         public void clear() { }
 
@@ -157,9 +158,9 @@ public final class Markers {
 
         MarkerList() { }
 
-        MarkerList(@NotNull @NonNls final String name) { super(name); }
+        MarkerList(@NonNls final String name) { super(name); }
 
-        public boolean addAll(final int index, @NotNull final Collection<? extends T> c) { throw newUnsupported(); }
+        public boolean addAll(final int index, final Collection<? extends T> c) { throw newUnsupported(); }
         public T get(final int index) { throw newOutOfBounds(); }
         public T set(final int index, final T element) { throw newUnsupported(); }
         public void add(final int index, final T element) { throw newUnsupported(); }
@@ -168,10 +169,10 @@ public final class Markers {
         public int indexOf(final Object o) { return -1; }
         public int lastIndexOf(final Object o) { return -1; }
 
-        @NotNull public ListIterator<T> listIterator() { return Collections.emptyListIterator(); }
-        @NotNull public ListIterator<T> listIterator(final int index) { return Collections.emptyListIterator(); }
+        public ListIterator<T> listIterator() { return Collections.emptyListIterator(); }
+        public ListIterator<T> listIterator(final int index) { return Collections.emptyListIterator(); }
 
-        @NotNull public List<T> subList(final int fromIndex, final int toIndex) {
+        public List<T> subList(final int fromIndex, final int toIndex) {
             if ((fromIndex < 0) || (toIndex < fromIndex) || (toIndex > 0)) throw newOutOfBounds();
             return this;
         }

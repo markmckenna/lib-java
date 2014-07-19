@@ -1,5 +1,6 @@
 package com.lantopia.libjava.util;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -10,6 +11,25 @@ import java.util.*;
 @SuppressWarnings("UnusedDeclaration")
 public class LibJava {
     private LibJava() {}
+
+    public static <T> T orDefault(@Nullable final T value, final T def) {
+        return (value==null) ? def : value;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <K,V> Map<K,V> nonNullUnmodifiableMap(@Nullable final Map<K,V> map) {
+        return map==null ? Collections.EMPTY_MAP : Collections.unmodifiableMap(map);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> nonNullUnmodifiableList(@Nullable final List<T> list) {
+        return list==null ? Collections.EMPTY_LIST : Collections.unmodifiableList(list);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> nonNullUnmodifiableList(@Nullable final T[] list) {
+        return list==null ? Collections.EMPTY_LIST : Collections.unmodifiableList(Arrays.asList(list));
+    }
 
     /**
      * Builds a set using a fluent interface.
@@ -33,14 +53,14 @@ public class LibJava {
 
         private Object elems = null;
 
-        public SetBuilder<T> sync(final boolean b) { this.sync = b; return this; }
-        public SetBuilder<T> mutable(final boolean b) { this.mutable = b; return this; }
-        public SetBuilder<T> with(final Collection<T> elements) { this.elems = elements; return this; }
+        @Override public SetBuilder<T> sync(final boolean b) { this.sync = b; return this; }
+        @Override public SetBuilder<T> mutable(final boolean b) { this.mutable = b; return this; }
+        @Override public SetBuilder<T> with(final Collection<T> elements) { this.elems = elements; return this; }
 
-        @SafeVarargs
+        @Override @SafeVarargs
         public final SetBuilder<T> with(final T... elements) { this.elems = elements; return this; }
 
-        @SuppressWarnings("unchecked")
+        @Override @SuppressWarnings("unchecked")
         public Set<T> build() {
             final Collection<T> e = (elems==null)
                     ? Collections.EMPTY_SET
@@ -53,6 +73,14 @@ public class LibJava {
             return out;
         }
 
-        public Set<T> get() { return build(); }
+        @Override public Set<T> get() { return build(); }
+
+        @Override public String toString() {
+            return "SetBuilderImpl{" +
+                    "mutable=" + mutable +
+                    ", sync=" + sync +
+                    ", elems=" + elems +
+                    '}';
+        }
     }
 }
