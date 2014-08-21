@@ -5,7 +5,6 @@
  *
  * Classes and information having to do with building coherent state machines.
  */
-@ParametersAreNonnullByDefault
-package com.lantopia.libjava.state;
+@ParametersAreNonnullByDefault package com.lantopia.libjava.state;
 
 import javax.annotation.ParametersAreNonnullByDefault;

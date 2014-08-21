@@ -12,12 +12,12 @@ import java.util.ListIterator;
  * @author Mark McKenna &lt;mark.denis.mckenna@gmail.com&gt;
  * @version 0.1
  * @since 16/07/2014
- *
+ * <p/>
  * Signal implementation that executes handlers in sequence, in the same thread as the dispatcher.
  */
 public class SequentialSignal<T> implements Signal<T> {
     @SuppressWarnings("unchecked")
-    private final List<WeakReference<Function<T,Void>>> observers = Collections.synchronizedList(new LinkedList());
+    private final List<WeakReference<Function<T, Void>>> observers = Collections.synchronizedList(new LinkedList());
 
     @Override
     public void notify(final Function<T, Void> h) {

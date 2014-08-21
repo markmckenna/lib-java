@@ -3,7 +3,6 @@
  * @version 0.1
  * @since 16/07/2014
  */
-@ParametersAreNonnullByDefault
-package com.lantopia.libjava.log;
+@ParametersAreNonnullByDefault package com.lantopia.libjava.log;
 
 import javax.annotation.ParametersAreNonnullByDefault;

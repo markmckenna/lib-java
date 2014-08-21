@@ -5,7 +5,6 @@
  *
  * Utility classes, designed to extend java.util
  */
-@ParametersAreNonnullByDefault
-package com.lantopia.libjava.util;
+@ParametersAreNonnullByDefault package com.lantopia.libjava.util;
 
 import javax.annotation.ParametersAreNonnullByDefault;

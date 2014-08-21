@@ -9,5 +9,6 @@ import com.google.common.base.Function;
  */
 public interface Signal<T> {
     void notify(Function<T, Void> h);
+
     void raise(T value);
 }
